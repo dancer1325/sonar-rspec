@@ -1,3 +1,7 @@
-Whenever there are portions of code that are duplicated and do not depend on the state of their 
-container class, they can be centralized inside a "utility class".  
-A utility class is a class that only has static members, hence it should not be instantiated.
+* utility class
+  * == class / has 1! static members
+    * -> ❌NOT instantiate ❌
+  * uses
+    * code / 
+      * is duplicated &
+      * NOT depend -- on the -- container class' state
