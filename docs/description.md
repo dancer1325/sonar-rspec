@@ -1,0 +1,378 @@
+= Rule Description
+
+:toc:
+
+This document describes how `+rule.adoc+` and its dependencies should be structured.
+
+See also the <<styling_guide.adoc#,Styling Guidelines>>, <<tone_guide.adoc#,Tone Guide>> and https://docs.sonarqube.org/latest/extension-guide/adding-coding-rules/#coding-rule-guidelines[Coding rule guidelines].
+
+For technical support, see also
+
+* Rule <<../rules/S6620/java/rule.adoc#,S6620>>, which showcases asciidoc features that are available when writing a rule description.
+* Rule <<../rules/S6778/java/rule.adoc#,S6778>>, which showcases multi-framework rules.
+
+== Sections
+
+There should be no first level titles (`+= Title+`) in your adoc.
+
+The allowed second level titles and lower are described in their respective sections below, for each type of rule description.
+
+== Types of rule description
+
+There are currently 2 types of rule descriptions, each having a specific structure.
+
+=== 1. Hotspot
+
+The possible sections for this format are the following:
+
+. Description (no title)
+. Ask Yourself Whether
+. Recommended Secure Coding Practices
+. Sensitive Code Example
+. Compliant Solution
+. Exceptions
+. See
+. See Also
+
+Third-level and fourth-level titles (`+=== Title t3+` and `+==== Title t4+`) are not checked for this type of rule.
+
+=== 2. Learn as You Code Rule Format
+
+This format is defined as follows:
+
+* Short description (no title)
+
+// This needs to be kept in sync with the [maps in the validation script](https://github.com/SonarSource/rspec/blob/master/rspec-tools/rspec_tools/validation/description.py#L32-L39).
+* Why is this an issue? (mandatory)
+** What is the potential impact?
+** Exceptions
+** (any other titles)
+* How to fix it
+** Code examples
+*** Noncompliant code example
+*** Compliant solution
+** How does this work?
+** Pitfalls
+** Going the extra mile
+** (any other titles)
+* How to fix it in {Framework Display Name}
+** Code examples
+*** Noncompliant code example
+*** Compliant solution
+** How does this work?
+** Pitfalls
+** Going the extra mile
+** (any other titles)
+* Resources
+** Documentation
+** Articles & blog posts
+** Conference presentations
+** Standards
+** External coding guidelines
+** Benchmarks
+** Related rules
+
+Where the `How to fix it in {Framework Display Name}` section can be repeated multiple times when the rule description is defined per-framework.
+
+The sections and subsections for this format are defined as follows:
+
+* Short description (no title) [Optional]
++
+A short introduction/summary of the topic, only a few sentences. +
+Goal: The title (or message) of a rule might not always be clear due to its shortness, and this should make it clear to our users what the issue is about. Experienced developers will immediately understand what it is about, and developers not yet familiar with the issue at hand can dig deeper into the `Why is this an issue?` section.
++
+* *Why is this an issue?* (level 2 title) *[Mandatory]*
++
+Start at the basics and go into more depth to explain the concepts behind this type of issue. This is most likely the place where a lot of the content will be. +
+This is the place to tell the “story” of the rule, including the impact of leaving it unfixed. We should include code samples wherever needed to make it easier to understand
+what is going on. This can be in the form of noncompliant and compliant code in a single code box (noncompliant lines should always be highlighted with the corresponding comment
+“// Noncompliant” optionally followed by some explanation) if that is clearer. This first tab could use a freeform 'story-telling' style explaining what the rule is
+detecting and why. Feel free to use the “What is the potential impact?” title if it makes sense, or any other titles you find useful. +
+Goal: Understand the concepts behind an issue and why it matters.
++
+** *What is the potential impact?* (level 3 title) [Optional]
++
+This subsection aims to address questions such as the following: +
+What is the risk for me?  What is the risk for my organization? What is the risk for the users? What can go wrong? +
+This section aims to talk about the impacts on the software, depending on the code qualities this issue is linked to: security, reliability, or maintainability. **(see <<metadata.adoc#code-field,Impacts>>.)**
++
+Consequently, this section can also talk about the impacts on the ecosystem of this software. For example, impacts on the organization, on the users, and impact in terms of regulations.
+https://github.com/SonarSource/rspec/blob/a51217c6d91abfa5e1d77d0ae0843e3903adf2d0/rules/S3649/impact.adoc[_Example._] +
+Goal: Our users should understand the impact of this issue on their project.
++
+* *How to fix it* or *How to fix it in `{Framework Display Name}`* (level 2 title) [Optional; the title depends on whether the description is generic or framework-specifc. See examples below.]
++
+This section consists of one or multiple fixes for this type of issue (`Noncompliant code example` vs. `Compliant solution`). There can be multiple fixes for different libraries and/or frameworks.
+If the fix for the rule is trivial (quickfix is available, it is easily inferred from the title and/or message), this section should be omitted and the fix could be mentioned in the previous section. 
+This tab could also use a freeform 'story-telling' style if that makes it clearer for the user. Feel free to use any of the titles below, or any other titles you find useful. +
+Goal: Get an idea of how this issue can be fixed for my project/framework, why this works, what to look out for, and also how to continue improving on this topic.
++
+** *How does this work?* (level 3 title) [Optional]
++
+Explain why this fixes the problem.
++
+** *Pitfalls* (level 3 title) [Optional]
++
+One or multiple pitfalls to take into account when working on fixing this issue.
+https://github.com/SonarSource/rspec/blob/a51217c6d91abfa5e1d77d0ae0843e3903adf2d0/rules/S6096/common/pitfalls/partial-path-traversal.adoc[_Example._]
++
+** *Going the extra mile* (level 3 title) [Optional]
++
+Even though the issue might be fixed, most of the time there can be way/s to further improve on this issue or to harden your project.
+The subsection should be concise.
+https://github.com/SonarSource/rspec/blob/a51217c6d91abfa5e1d77d0ae0843e3903adf2d0/rules/S5131/common/extra-mile/csp.adoc[_Example._]
++
+* *Resources* (level 2 title) [Optional]
++
+Include resources if our users want to dig even deeper, that can be presented in the different categories.
+https://github.com/SonarSource/rspec/tree/a51217c6d91abfa5e1d77d0ae0843e3903adf2d0/rules/S5131/common/resources[_Example._] +
+Goal: Allow the user to dig deeper by providing a curated list of resources.
++
+** *Documentation* (level 3 title) [Optional]
+** *Articles & blog posts* (level 3 title) [Optional]
+** *Conference presentations* (level 3 title) [Optional]
+** *Standards* (level 3 title) [Optional]
+** *External coding guidelines* (level 3 title) [Optional]
+** *Benchmarks* (level 3 title) [Optional]
+** *Related rules* (level 3 title) [Optional]
++
+This section lists Sonar rules related to the current one. The rule ID(s) should be followed by the rule title(s) or a sentence explaining the relation between the rules, e.g.: "_S2275 and S3457 specialize in detecting type mismatches with format strings._".
+
++
+xref:link_formatting.adoc[Standard for links is defined in this document.]
+
+Content of the section "_How to fix it_ / _How to fix it in {Framework Display Name}_" can either be generic or framework specific.
+
+When the content is generic, the "_How to fix it_" title must be used, and the section should only appear once. Example:
+....
+== Why is this an issue?
+Explanation of why this is bad.
+
+== How to fix it
+
+=== Code examples
+
+==== Noncompliant code example
+[source,js,diff-id=1,diff-type=noncompliant]
+----
+var myExample;
+----
+
+==== Compliant solution
+[source,js,diff-id=1,diff-type=compliant]
+----
+var myExample = 0;
+----
+
+=== How does this work?
+We added something.
+
+== Resources
+=== Documentation
+http-address-of-documentation[My doc name]
+
+....
+Note that you can see two special attributes (`diff-id` and `diff-type`) used in the code examples above, these attributes are explained in the <<Diff view,Diff view>>
+section below.
+
+When the content is framework-specific, one or more "_How to fix it in `{Framework Display Name}`_" sections (with their respective subsections) must be present.
+Each repetition will represent the specific _How to fix it_ section of a given framework.
+For example:
+....
+== How to fix it in Spring
+
+=== Code examples
+... Some generic text and code examples for Spring...
+
+=== How does this work?
+... Explanation about how the exploit works in Spring...
+
+=== Pitfalls
+... Generic and Spring-specific pitfalls to avoid when fixing the issue...
+
+== How to fix it in JSP
+
+=== Code examples
+... Some generic text and code examples for JSP...
+
+=== How does this work?
+... Explanation about how the exploit works in JSP...
+
+=== Pitfalls
+... Generic and JSP-specific pitfalls to avoid when fixing the issue...
+....
+
+Ideally, by convention and for maintainability, each framework _How to fix it_ section will be defined in separate files.
+Ex:
+....
+ == Why is this an issue?
+ ... Explanation ...
+
+ # How to fix it sections
+
+ include::./how-to-fix-it/framework-1.adoc[]
+
+ include::./how-to-fix-it/framework-2.adoc[]
+
+ == Resources
+ === Documentation
+ http-address-of-documentation[My doc name]
+....
+
+Note that each framework-specific _How to fix it_ subsection must start with an H2 title following the given format:
+`== How to fix it in [an|a|the]? {Framework name}`.
+This is important, as this format will be expected by the analyzers when loading the rule content to recognize the different subsections.
+Furthermore, the display name of the framework has to match an allowed framework
+display name, as defined in <<header_names/allowed_framework_names.adoc#,this allowed framework names file>>.
+
+==== General guidance
+
+Most sections and subsections of the Learn as You Code rule format are optional, only the `Why is this an issue?` main section is mandatory. 
+The goal is to provide the right level of guidance so that users get the right information from the rules at the right time.
+Do not feel obliged to use every section or sub-section if omitting them would lead to a better user experience.
+
+==== Guidelines if you aren’t sure where something belongs in a rule
+* If you need the information to fix the issue, but only the first time, it probably belongs in ‘Why is this an issue?’
+* If you need the information to fix the issue every time, it probably belongs in ‘How to fix it?’
+* If you don’t need the information to fix the issue, but it will help users grow their knowledge, it probably belongs in ‘Resources’ (this maps to the 'More Info' tab in the products)
+
+By being careful about what goes where, we help to ensure that users get exactly what they need, when they need it.
+
+==== Guidelines on content focus
+
+We want to help users to create Clean Code. Rule content should focus on the manner in which the code is not clean, why this is an issue, and how to remedy this. 
+Rules should talk about the potential impact on software quality in the 'What is the potential impact?' sub-section.
+
+For example, if you are talking about a locking issue, it makes sense to focus on the logical issues that could lead to a deadlock and how to fix that in the main rule content. 
+The implications of a deadlock on the application reliability would then go into the 'What is the potential impact?' sub-section.
+
+== Code Examples
+
+Whenever possible, prefix your code blocks with `[source,language]`, in order to get syntax coloring.
+
+....
+[source,cpp]
+----
+int main(int argc, const char** argv) {
+    return 0;
+}
+----
+....
+
+That is mandatory for the Noncompliant and Compliant code example sections, just recommended - at the moment - for other sections.
+
+The language names accepted are usually the name we already use for the language folders in RSPEC. Exceptions are:
+
+cfamily:: use `cpp`, `c`, or `objectivec`
+
+plsql:: use `sql`
+
+tsql:: use `sql`
+
+In case no language is appropriate for a code block (for example shared examples between multiple languages), you can use `text` as the language.
+
+=== Comments within code blocks
+
+Colon (`:`) should be used as separator between `Noncompliant`/`Compliant` comments and the text explanation that follows, if any.
+
+[source,cpp]
+----
+int X = 2; // Noncompliant: variable should be in lowercase
+----
+
+
+When referencing a name within a comment in a code example, use double quotes to make it clear it refers to an existing element in the code.
+
+[source,cpp]
+----
+int i = 0;
+cout << noexcept(++i); // Noncompliant: "i" is not incremented
+----
+
+=== Diff view
+
+Additionally, you can also use two attributes to let the products know your code examples should be highlighted with a diff view when possible
+(showing the changes in the code examples as red/green).
+These attributes are optional and if a product does not yet support the diff view feature, these attributes will simply be ignored.
+
+These attributes are `diff-id=X` and `diff-type=[noncompliant|compliant]`. The `diff-id` attributes describe which code examples should
+be compared together, and the `diff-type` attribute explain how it should be displayed `Noncompliant` (red) vs. `Compliant` (green).
+A single and unique diff-id should be used only once for each type of code example as shown in the description of a rule.
+....
+==== Noncompliant code example
+[source,js,diff-id=1,diff-type=noncompliant]
+----
+var myExample;
+----
+
+==== Compliant solution
+[source,js,diff-id=1,diff-type=compliant]
+----
+var myExample = 0;
+----
+....
+
+
+== Parameters
+
+Parameters should be listed in a subsection as follow:
+
+....
+=== Parameters
+
+.name
+****
+_TYPE_
+
+----
+default value
+----
+
+Description of what the parameter does.
+****
+
+.name2
+****
+----
+another default value
+----
+Description of what this second parameter does.
+****
+
+.name3
+****
+_TYPE_
+
+Description of what this third parameter does.
+****
+
+.name4
+****
+Description of what this fourth parameter does.
+****
+
+....
+
+The parameter name and the description are mandatory. The type and default value are not.
+
+The parameter name with a `.` before will be the title of the block below marked by `****`.
+
+We always use `----` around the default parameter to avoid having a special character confuse AsciiDoctor and to create a visual consistency for all parameters.
+
+== Comment a rule
+
+Comments and links that were created on Jira have been gathered in a `comments-and-links.adoc` file for each concerned rule. +
+You can add a comment anywhere in a rule by adding the following lines in the `*.adoc` file:
+[source]
+----
+\ifdef::env-github,rspecator-view[]
+John Doe (9 Jun 2021, 15:49): my comment on the rule
+\endif::env-github,rspecator-view[]
+----
+This way, your comment will only be visible in GitHub preview and on the Search Page (and will not be visible for the user).
+
+== Share content between rules
+
+You can share content between rules by using the `shared_content` folder at the root of the repository.
+
+Any included content for a rule can only come from the folder of the rule being described, `shared_content`, or any of their subfolders.
